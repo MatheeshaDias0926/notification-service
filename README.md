@@ -47,7 +47,7 @@ npm test
 ## Production Deployment
 
 - **Deployed URL:** https://notification-service-e8ve.onrender.com
-- **API Gateway URL:** [YOUR_API_GATEWAY_URL]
+- **API Gateway URL:** https://api-gateway-5vao.onrender.com
 
 > For all production API calls, use the API Gateway URL above. Direct service URLs are for internal use and debugging only.
 
