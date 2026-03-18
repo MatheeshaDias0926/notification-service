@@ -13,16 +13,16 @@ Notification microservice for the Smart Campus Services platform.
 
 ## API Endpoints
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| GET | `/notifications` | JWT | List notifications (filtered) |
-| GET | `/notifications/stats` | JWT | Notification statistics |
-| GET | `/notifications/:id` | JWT | Get by ID |
-| POST | `/notifications/send` | JWT/Key | Send notification (inter-service) |
-| PUT | `/notifications/:id/read` | JWT | Mark as read |
-| PUT | `/notifications/read-all` | JWT | Mark all as read |
-| DELETE | `/notifications/:id` | JWT | Delete notification |
-| GET | `/health` | No | Health check |
+| Method | Endpoint                  | Auth    | Description                       |
+| ------ | ------------------------- | ------- | --------------------------------- |
+| GET    | `/notifications`          | JWT     | List notifications (filtered)     |
+| GET    | `/notifications/stats`    | JWT     | Notification statistics           |
+| GET    | `/notifications/:id`      | JWT     | Get by ID                         |
+| POST   | `/notifications/send`     | JWT/Key | Send notification (inter-service) |
+| PUT    | `/notifications/:id/read` | JWT     | Mark as read                      |
+| PUT    | `/notifications/read-all` | JWT     | Mark all as read                  |
+| DELETE | `/notifications/:id`      | JWT     | Delete notification               |
+| GET    | `/health`                 | No      | Health check                      |
 
 ## Inter-Service Communication
 
@@ -43,6 +43,21 @@ npm run dev     # http://localhost:3004
 ```bash
 npm test
 ```
+
+## Production Deployment
+
+- **Deployed URL:** https://notification-service-e8ve.onrender.com
+- **API Gateway URL:** [YOUR_API_GATEWAY_URL]
+
+> For all production API calls, use the API Gateway URL above. Direct service URLs are for internal use and debugging only.
+
+## CI/CD & Security
+
+- Automated build, test, and deploy via GitHub Actions
+- Static analysis: SonarCloud
+- Dependency scanning: Snyk
+
+---
 
 ## License
 
