@@ -1,6 +1,6 @@
 # Notification Service — Smart Campus Services
 
-Notification microservice for the Smart Campus Services platform.
+Notification microservice for the Smart Campus Services platform (CTSE Cloud Computing Assignment).
 
 ## Features
 
@@ -10,6 +10,32 @@ Notification microservice for the Smart Campus Services platform.
 - **Stats Dashboard** — Notification counts by type
 - **Delivery Callbacks** — Reports delivery status back to Course Service
 - **Internal Auth** — Supports both JWT and API key for service-to-service calls
+- **Security** — Helmet, CORS, rate limiting, input validation (Joi)
+
+## Tech Stack
+
+- Node.js 18 + Express
+- MongoDB Atlas (Mongoose ODM)
+- Axios (for inter-service communication with Auth & Course Services)
+- Docker (multi-stage build, non-root user)
+- GitHub Actions CI/CD
+- SonarCloud + Snyk (DevSecOps)
+
+## Quick Start
+
+```bash
+npm install
+cp .env.example .env
+# Edit .env with MongoDB URI, JWT secret, Auth/Course Service URLs
+npm run dev     # http://localhost:3004
+```
+
+### Docker
+
+```bash
+docker build -t notification-service .
+docker run -p 3004:3004 --env-file .env notification-service
+```
 
 ## API Endpoints
 
@@ -24,40 +50,36 @@ Notification microservice for the Smart Campus Services platform.
 | DELETE | `/notifications/:id`      | JWT     | Delete notification               |
 | GET    | `/health`                 | No      | Health check                      |
 
+### API Documentation
+
+Once running: http://localhost:3004/api-docs
+
+## Production Deployment
+
+- **Cloud Provider:** Microsoft Azure
+- **Service:** Azure Container Apps (managed container orchestration)
+- **Registry:** Azure Container Registry (`campusservices.azurecr.io`)
+- **Live URL:** https://notification-service.redisland-b57e0bf2.eastus.azurecontainerapps.io
+
+## CI/CD Pipeline
+
+1. **Lint & Test** — ESLint + Jest with coverage
+2. **Security Scan** — SonarCloud (SAST) + Snyk (dependency vulnerabilities)
+3. **Build & Push** — Docker build → push to Azure Container Registry
+4. **Deploy** — Update Azure Container App with new image
+
 ## Inter-Service Communication
 
-1. **Course Service → Notification Service**: Sends enrollment confirmation notifications via `POST /notifications/send`
-2. **Timetable Service → Notification Service**: Sends schedule reminders via `POST /notifications/send`
-3. **Notification Service → Course Service**: Delivery status callback to Course Service after sending
-
-## Quick Start
-
-```bash
-npm install
-cp .env.example .env
-npm run dev     # http://localhost:3004
-```
+1. **Auth Service**: Validates JWT tokens via `GET /auth/validate`
+2. **Course Service → Notification Service**: Sends enrollment confirmation notifications via `POST /notifications/send`
+3. **Timetable Service → Notification Service**: Sends schedule reminders via `POST /notifications/send`
+4. **Notification Service → Course Service**: Delivery status callback after sending
 
 ## Testing
 
 ```bash
 npm test
 ```
-
-## Production Deployment
-
-- **Deployed URL:** https://notification-service-e8ve.onrender.com
-- **API Gateway URL:** https://api-gateway-5vao.onrender.com
-
-> For all production API calls, use the API Gateway URL above. Direct service URLs are for internal use and debugging only.
-
-## CI/CD & Security
-
-- Automated build, test, and deploy via GitHub Actions
-- Static analysis: SonarCloud
-- Dependency scanning: Snyk
-
----
 
 ## License
 
